@@ -8,22 +8,23 @@ public class TreeComponent extends JPanel
     private static final int PANEL_HEIGHT = 700;
     private final int botX = 350, botY = 700;
     private final int topX = 350, topY = 600;
-    private final int lefX, lefY;
-    private final int rigX, rigY;
-    private final int angle;
+    private final double angle = 30;
     private int current;
-    private int deltaX, deltaY;
+    private double deltaX, deltaY;
+    private int lefX, lefY;
+    private int rigX, rigY;
+    private final double half = this.deltaY / 2;
+    private final double adj = Math.cos( this.angle ) * half;
     
     
-    public TreeComponent( int cur, int a )
+    public TreeComponent( int cur )
     {
         this.current = cur;
-        this.angle = a;
         
         this.setBackground( Color.BLACK );
         this.setPreferredSize( new Dimension( PANEL_WIDTH, PANEL_HEIGHT ) );
         
-        
+        this.lefY = Math.floor( 700 - (this.deltaY + this.adj) );
     }
     
     public void drawFractal( Graphics g2 )
