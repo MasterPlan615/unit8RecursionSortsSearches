@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.Line2D;
 import javax.swing.JPanel;
 
 
@@ -6,50 +7,50 @@ public class TreeComponent extends JPanel
 {
     private static final int PANEL_WIDTH = 700;
     private static final int PANEL_HEIGHT = 700;
-    private final int botX = 350, botY = 700;
-    private final int topX = 350, topY = 600;
-    private final double angle = 30;
-    private int current;
-    private double deltaX, deltaY;
-    private int lefX, lefY;
-    private int rigX, rigY;
-    private final double half = this.deltaY / 2;
-    private final double adj = Math.cos( this.angle ) * half;
+    private double angle = 30;
+    private double length;
+    private Line2D.Double line;
     
     
-    public TreeComponent( int cur )
-    {
-        this.current = cur;
-        
+    public TreeComponent( double len )
+    {   
+        this.length = len;
         this.setBackground( Color.BLACK );
         this.setPreferredSize( new Dimension( PANEL_WIDTH, PANEL_HEIGHT ) );
-        
-        this.lefY = Math.floor( 700 - (this.deltaY + this.adj) );
     }
     
-    public void drawFractal( Graphics g2 )
-    {
+    public void drawFractal( Graphics2D g, double len, double x, double y)
+    {        
+        double cos, sin, x2, y2, x3, y3, x4, y4;
         
-        
-        if( current == 10 )
+        if( len == length )
         {
-            g2.drawLine( this.botX, this.botY, this.topX, this.topY );
-            this.current -= 1;
+            x2 = x;
+            y2 = y - len;
+            line = new Line2D.Double( x, y, x2, y2 );
+            g.draw( line );
+            len -= 5;
         }
         else
         {
-            this.deltaX = this.topX - this.botX;
-            this.deltaY = this.topY - this.botY;
+            cos = Math.cos( this.angle ) * ( len / 2 );
+            sin = Math.sin( this.angle ) * ( len / 2 );
+
+            y3 = y - cos;
+            x3 = x - sin;
+            y4 = y + cos;
+            x4 = x + sin;
             
-            drawFractal( g2 );
+            drawFractal( g, len-5, x3, y3 );
+            drawFractal( g, len-5, x4, y4 );
         }
     }
     
-    public void paintComponent( Graphics g2 )
+    public void paintComponent( Graphics2D g )
     {
-        super.paintComponent( g2 );
+        super.paintComponent( g );
+        Graphics2D g2 = ( Graphics2D ) g;
         g2.setColor( Color.BLUE );
-        
-        drawFractal( g2 );
+        drawFractal( g2, this.length, 350, 700 );
     }
 }
