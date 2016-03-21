@@ -22,7 +22,7 @@ public class TreeViewer extends JFrame
         this.setSize( WIDTH, HEIGHT );
         this.setVisible( true );
         
-        TreeComponent tree = new TreeComponent( 20 );
+        TreeComponent tree = new TreeComponent();
         
         this.add( tree );
     }

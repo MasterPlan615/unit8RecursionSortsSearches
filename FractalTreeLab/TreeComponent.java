@@ -1,56 +1,85 @@
 import java.awt.*;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import javax.swing.JPanel;
-
+// import java.awt.event.MouseMotionListener;
+// import java.awt.event.MouseEvent;
 
 public class TreeComponent extends JPanel
 {
-    private static final int PANEL_WIDTH = 700;
-    private static final int PANEL_HEIGHT = 700;
-    private double angle = 30;
-    private double length;
+    private static final int PANEL_WIDTH = 800;
+    private static final int PANEL_HEIGHT = 800;
+    //     private double angle;
+    private double angle2 = Math.toRadians( 35 );
+    //     private int when = 0;
     private Line2D.Double line;
-    
-    
-    public TreeComponent( double len )
+    private Line2D.Double line2;
+    //     private MouseMotionListener motion_listener;
+
+    public TreeComponent()
     {   
-        this.length = len;
         this.setBackground( Color.BLACK );
         this.setPreferredSize( new Dimension( PANEL_WIDTH, PANEL_HEIGHT ) );
+        // 
+        //         this.motion_listener = new MouseMotListener();
+        //         this.addMouseMotionListener( motion_listener );
     }
-    
-    public void drawFractal( Graphics2D g, double len, double x, double y)
+
+    public void drawFractal( double len, double x, double y, double ang, Graphics2D g2)
     {        
-        double cos, sin, x2, y2, x3, y3, x4, y4;
-        
-        if( len == length )
+        double x2, y2, x3, y3;
+
+        if( len == 0 )
         {
-            x2 = x;
-            y2 = y - len;
-            line = new Line2D.Double( x, y, x2, y2 );
-            g.draw( line );
-            len -= 5;
+            return;
         }
         else
         {
-            cos = Math.cos( this.angle ) * ( len / 2 );
-            sin = Math.sin( this.angle ) * ( len / 2 );
+            x2 = ( int )( x - len * Math.sin( ang + this.angle2 ) );
+            y2 = ( int )( y - len * Math.cos( ang + this.angle2 ) );
+            x3 = ( int )( x - len * Math.sin( ang - this.angle2 ) );
+            y3 = ( int )( y - len * Math.cos( ang - this.angle2 ) );
 
-            y3 = y - cos;
-            x3 = x - sin;
-            y4 = y + cos;
-            x4 = x + sin;
-            
-            drawFractal( g, len-5, x3, y3 );
-            drawFractal( g, len-5, x4, y4 );
+            line = new Line2D.Double( x, y, x2, y2 );
+            g2.draw( line );
+
+            line2 = new Line2D.Double( x, y, x3, y3 );
+            g2.draw( line2 );
+
+            drawFractal( len - 10, x2, y2, ang + this.angle2, g2 );
+
+            drawFractal( len - 10, x3, y3, ang - this.angle2, g2 );
         }
     }
-    
-    public void paintComponent( Graphics2D g )
+
+    public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
         Graphics2D g2 = ( Graphics2D ) g;
-        g2.setColor( Color.BLUE );
-        drawFractal( g2, this.length, 350, 700 );
+
+        g2.setColor( Color.GREEN );
+
+        drawFractal( 100, 400, 600, 0, g2 );
     }
+
+    //     class MouseMotListener implements MouseMotionListener
+    //     {
+    //         private Point2D.Double mouse_loc;
+    //         
+    //         
+    //         public void mouseDragged( MouseEvent event )
+    //         {
+    //            
+    //         }
+    //         
+    //         public void mouseMoved( MouseEvent event )
+    //         {
+    //             when += 1;
+    //             if( when%20 == 0 )
+    //             {
+    //                 angle = event.getY() + angle2;
+    //             }
+    //             repaint();
+    //         }
+    //     }
 }
