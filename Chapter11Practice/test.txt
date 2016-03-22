@@ -1,0 +1,2 @@
+This is text. Java reads text.
+This is the next text. Java reads the next text.

@@ -49,6 +49,7 @@ public class TreeComponent extends JPanel
             drawFractal( len - 10, x2, y2, ang + this.angle2, g2 );
 
             drawFractal( len - 10, x3, y3, ang - this.angle2, g2 );
+
         }
     }
 
