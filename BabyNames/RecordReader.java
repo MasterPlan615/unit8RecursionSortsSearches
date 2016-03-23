@@ -25,11 +25,10 @@ public class RecordReader
    public void process(Scanner in)
    {
       String name = in.next();
-      int count = in.nextInt();
-      double percent = in.nextDouble();
       
       if (total < limit) { System.out.print(name + " "); }
-      total = total + percent;
+      //total = total + percent;
+      total += 1;
    }
 
    /**

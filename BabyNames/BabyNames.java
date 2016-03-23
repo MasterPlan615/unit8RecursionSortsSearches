@@ -8,15 +8,16 @@ public class BabyNames
 
    public static void main(String[] args) throws FileNotFoundException
    {  
-      Scanner in = new Scanner(new File("babynames.txt"));
+      Scanner file_name = new Scanner( System.in );
+      System.out.println( "Please enter a file name: " );
+      File file = new File( file_name.next() );
+      Scanner in = new Scanner( file ).useDelimiter(" ");
          
-      RecordReader boys = new RecordReader(LIMIT);
-      RecordReader girls = new RecordReader(LIMIT);
+      RecordReader boys = new RecordReader(LIMIT); // Remember there are two separate RecordReaders reading the text
+      RecordReader girls = new RecordReader(LIMIT); // Ditto
       
       while (boys.hasMore() || girls.hasMore())
       {
-         int rank = in.nextInt();
-         System.out.print(rank + " ");
          boys.process(in);
          girls.process(in);
          System.out.println();

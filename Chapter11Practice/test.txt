@@ -1,2 +1,1 @@
-This is text. Java reads text.
-This is the next text. Java reads the next text.
+Hello, this is merely but a test. How many characters, words, and sentences are there? We may never know.
